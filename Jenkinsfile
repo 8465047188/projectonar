@@ -28,7 +28,10 @@ node {
   stage ('Install') {
       sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore install -DskipTests"
   }
-  stage ('Deliver & Deployment') {
+  stage ('Deploy') {
+      sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore deploy -DskipTests"
+  }
+   stage ('Deliver & Deployment') {
       sh 'curl -u admin:redhat@123 -T target/**.war "http://54.146.212.94:8080/manager/text/deploy?path=/gopi&update=true"'
   }
   stage ('SmokeTest') {
